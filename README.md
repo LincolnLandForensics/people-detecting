@@ -1,3 +1,20 @@
+forked from https://github.com/nddbk/people-detecting/
+
+```
+pip install -r requirements_people-detecting.txt
+```
+
+```
+python peopleCount2.py -c
+```
+![alt text](images/people_detection1.png)
+
+
+![alt text](images/videos_xlsx.png)
+
+
+
+
 # people-detecting
 Detect people from video/camera using OpenCV
 
