@@ -1,0 +1,8 @@
+imutils>=0.4.5
+numpy>=1.8.0
+opencv-python>=3.4.0
+openpyxl
+moviepy
+# shutil
+#scipy>=0.13.0
+#scikit-learn>=0.18.0
