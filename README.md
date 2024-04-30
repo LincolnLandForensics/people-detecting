@@ -3,6 +3,7 @@ forked from https://github.com/nddbk/people-detecting/
 ```
 pip install -r requirements_people-detecting.txt
 ```
+insert videos into your videos sub folder
 
 ```
 python peopleCount2.py -c
