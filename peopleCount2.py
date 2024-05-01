@@ -18,7 +18,7 @@ import argparse  # for menu system
 import numpy as np
 from openpyxl import load_workbook, Workbook
 from openpyxl.styles import Font, Alignment, PatternFill
-from moviepy.editor import VideoFileClip    # pip install moviepy
+# from moviepy.editor import VideoFileClip    # pip install moviepy
 from imutils.object_detection import non_max_suppression
 
 # <<<<<<<<<<<<<<<<<<<<<<<<<<      Pre-Sets       >>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -76,11 +76,11 @@ def main():
     else:
         outuput_xlsx = args.output
 
-    if args.count:
+    if 1==1:
+    # if args.count:
 
         folder_exists = os.path.exists(input_folder)
         if folder_exists == True:
-            # data = []
             count_people()
             write_xlsx(data)  # disable xlsxwriter
 
@@ -91,6 +91,9 @@ def main():
  
     else:
         usage()
+
+    # Add a pause
+    input("Press Enter to continue...")
     
     return 0
 
@@ -111,7 +114,8 @@ def count_people():
         row_data = {}
         (max_people_detected, file_size, creation_time, access_time, modified_time) = ('', '', '', '', '')
         (video) = ('')
-
+        (codec, duration, metadata, audio_found, video_duration, video_fps, video_size) = ('', '', '', '', '', '', '')
+        
         video = os.path.join(input_folder, file_name)
 
         file_size = os.path.getsize(video)
@@ -120,8 +124,9 @@ def count_people():
         file_info = os.stat(video)
         
         (creation_time, access_time, modified_time) = convert_to_iso(file_info)
-        # (codec, duration, metadata) = get_video_info(input_folder, file_name)   # test
-        (codec, duration, metadata, audio_found, video_duration, video_fps, video_size) = get_video_info(input_folder, file_name)   # test
+
+        # get_video_info blows an error when converting to an exe
+        # (codec, duration, metadata, audio_found, video_duration, video_fps, video_size) = get_video_info(input_folder, file_name)   # task
 
 
 
@@ -229,7 +234,7 @@ def create_folder(folder_name):
 def get_video_info(input_folder, file_name):
     # print(f'input_folder = {input_folder}   file_name   = {file_name}') # temp
     (codec, duration, metadata) = ('', '', '')
-    (audio_found, video_duration, video_fps, video_size, duration) = ('', '', '', '', '')
+    (audio_found, video_duration, video_fps, video_size) = ('', '', '', '')
 
     try:
         # fullpath = (f'{input_folder}/{file_name}')
@@ -315,15 +320,20 @@ def write_xlsx(data):
 
     headers = [
         "file_name", "max_people_detected", "file_size", "creation_time", "access_time"
-        , "modified_time", "duration", "audio_found", "video_fps", "video_size", "metadata", "codec"
+        , "modified_time"
     ]
+    
+    # headers = [
+        # "file_name", "max_people_detected", "file_size", "creation_time", "access_time"
+        # , "modified_time", "duration", "audio_found", "video_fps", "video_size", "metadata", "codec"
+    # ]
 
     # Write headers to the first row
     for col_index, header in enumerate(headers):
         cell = worksheet.cell(row=1, column=col_index + 1)
         cell.value = header
         # cell.font = header_format  # Apply the header format
-        if col_index in [0, 1, 2, 3, 4, 5, 6, 7, 8]:  # Indices of columns A, C, D, E, F, G, H
+        if col_index in [0, 1, 2, 3, 4, 5, 6]:  # Indices of columns A, C, D, E, F, G, H
             fill = PatternFill(start_color="FFA500", end_color="FFA500", fill_type="solid") # orange header
             cell.fill = fill
 
@@ -334,12 +344,12 @@ def write_xlsx(data):
     worksheet.column_dimensions['D'].width = 18 # creation_time
     worksheet.column_dimensions['E'].width = 18 # access_time
     worksheet.column_dimensions['F'].width = 18 # modified_time
-    worksheet.column_dimensions['G'].width = 7 # duration
-    worksheet.column_dimensions['H'].width = 11 # audio_found
-    worksheet.column_dimensions['I'].width = 9 # video_fps
-    worksheet.column_dimensions['J'].width = 11 # video_size
-    worksheet.column_dimensions['K'].width = 9 # metadata
-    worksheet.column_dimensions['L'].width = 6 # codec
+    # worksheet.column_dimensions['G'].width = 7 # duration
+    # worksheet.column_dimensions['H'].width = 11 # audio_found
+    # worksheet.column_dimensions['I'].width = 9 # video_fps
+    # worksheet.column_dimensions['J'].width = 11 # video_size
+    # worksheet.column_dimensions['K'].width = 9 # metadata
+    # worksheet.column_dimensions['L'].width = 6 # codec
 
     for row_index, row_data in enumerate(data):
         # print(f'Processing row: {row_data}')  # Debugging output
